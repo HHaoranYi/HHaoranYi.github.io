@@ -1,9 +1,9 @@
 ---
 # Display name
-title: 吳健雄
+title: Haoran Yi
 
 # Name pronunciation (optional)
-name_pronunciation: Chieasfddsaf
+# name_pronunciation: Chieasfddsaf
 
 # Full name (for SEO)
 first_name: Shiung Wu
