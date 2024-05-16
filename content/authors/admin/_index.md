@@ -6,8 +6,8 @@ title: Haoran Yi
 # name_pronunciation: Chieasfddsaf
 
 # Full name (for SEO)
-first_name: Shiung Wu
-last_name: Chien
+first_name: Haoran
+last_name: Yi
 
 # Status emoji
 status:
@@ -17,11 +17,11 @@ status:
 superuser: true
 
 # Role/position/tagline
-role: Professor of Artificial Intelligence
+role: Student in Master of Embedded System
 
 # Organizations/Affiliations to show in About widget
 organizations:
-  - name: Stanford University
+  - name: University of Twente
     url: https://www.stanford.edu/
 
 # Short bio (displayed in user profile at end of posts)
@@ -36,15 +36,15 @@ interests:
 # Education to show in About widget
 education:
   courses:
-    - course: PhD in Artificial Intelligence
-      institution: Stanford University
-      year: 2012
-    - course: MEng in Artificial Intelligence
-      institution: Massachusetts Institute of Technology
-      year: 2009
-    - course: BSc in Artificial Intelligence
-      institution: Massachusetts Institute of Technology
-      year: 2008
+    # - course: PhD in Artificial Intelligence
+    #   institution: Stanford University
+    #   year: 2012
+    - course: Msc in Embedded System
+      institution: University of Twente
+      year: 2025
+    - course: BEng in Microelectronics Science and Engineering
+      institution: Qingdao University 
+      year: 2022
 
 # Skills
 # For available icons, see: https://docs.hugoblox.com/getting-started/page-builder/#icons
