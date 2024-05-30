@@ -25,11 +25,11 @@ organizations:
     url: https://www.stanford.edu/
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include distributed robotics, mobile computing and programmable matter.
+bio: My research interests include computer architecture, hardware accelerator for DNN.
 
 # Interests to show in About widget
 interests:
-  - Artificial Intelligence
+  - Computer Architecture
   - Computational Linguistics
   - Information Retrieval
 
