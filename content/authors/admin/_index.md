@@ -22,7 +22,7 @@ role: Student in Master of Embedded System
 # Organizations/Affiliations to show in About widget
 organizations:
   - name: University of Twente
-    url: https://www.stanford.edu/
+    url: https://www.utwente.nl/en/eemcs/caes/
 
 # Short bio (displayed in user profile at end of posts)
 bio: My research interests include computer architecture, hardware accelerator for DNN.
@@ -30,8 +30,8 @@ bio: My research interests include computer architecture, hardware accelerator f
 # Interests to show in About widget
 interests:
   - Computer Architecture
-  - Computational Linguistics
-  - Information Retrieval
+  - High Performance Computing
+  - Artificial Intelligence
 
 # Education to show in About widget
 education:
