@@ -4,7 +4,7 @@
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
 title: Haoran Yi # Website name
-baseURL: 'https://example.com/' # Website URL
+baseURL: 'https://hhaoranyi.github.io/' # Website URL
 
 ############################
 ## LANGUAGE
@@ -31,7 +31,7 @@ permalinks:
   tags: '/tag/:slug/'
   categories: '/category/:slug/'
   publication_types: '/publication-type/:slug/'
-disableAliases: true
+disableAliases: false
 outputs:
   home: [HTML, RSS, JSON, WebAppManifest, headers, redirects]
   section: [HTML, RSS]
