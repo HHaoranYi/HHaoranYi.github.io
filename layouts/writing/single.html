@@ -1,0 +1,60 @@
+{{- define "main" -}}
+<article class="post-single reading-article">
+  <header class="post-header">
+    <div class="breadcrumbs-subtle">
+      <a href="/writing/">&larr; Writing</a>
+    </div>
+
+    <h1 class="post-title entry-hint-parent">
+      {{ .Title }}
+    </h1>
+
+    <div class="post-meta-line">
+      <span>{{ .Date.Format "Jan 02, 2006" }}</span>
+      {{- with .Params.categories }}
+      <span class="sep">&middot;</span>
+      <span class="post-category">{{ index . 0 }}</span>
+      {{- end }}
+      <span class="sep">&middot;</span>
+      <span>{{ .ReadingTime }} min read</span>
+    </div>
+
+    {{- with .Description }}
+    <div class="post-description-lead">
+      {{ . }}
+    </div>
+    {{- end }}
+  </header>
+
+  {{- if (.Param "ShowToc") }}
+  <div class="toc-wrapper">
+    <details {{ if (.Param "TocOpen") }} open{{ end }}>
+      <summary accesskey="c" title="(Alt + C)">
+        <span class="details">Table of Contents</span>
+      </summary>
+      <div class="inner">
+        {{- .TableOfContents -}}
+      </div>
+    </details>
+  </div>
+  {{- end }}
+
+  <div class="post-content editorial-prose">
+    {{- .Content }}
+  </div>
+
+  <footer class="post-footer">
+    {{- if .Params.tags }}
+    <ul class="post-tags-list">
+      {{- range .Params.tags }}
+      <li><a href="{{ "tags/" | absLangURL }}{{ . | urlize }}/">#{{ . }}</a></li>
+      {{- end }}
+    </ul>
+    {{- end }}
+
+    <div class="post-back-link">
+      <a href="/writing/">&larr; Back to all articles</a>
+    </div>
+  </footer>
+</article>
+{{- end -}}

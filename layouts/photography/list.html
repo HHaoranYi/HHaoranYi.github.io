@@ -1,0 +1,46 @@
+{{- define "main" -}}
+<div class="photography-wide-container">
+  <header class="page-header photo-page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    <p class="page-description text-secondary">
+      Visual journals, architecture, light, and geometry outside of silicon.
+    </p>
+  </header>
+
+  <div class="photo-editorial-feed">
+    {{- range .Pages }}
+    <article class="photo-album-feature">
+      <div class="album-meta-top">
+        <h2 class="album-heading">
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </h2>
+        <span class="album-location-date">
+          {{- with .Params.location }}{{ . }} &middot; {{ end }}{{ .Date.Format "2006" }}
+        </span>
+      </div>
+
+      <div class="album-hero-image">
+        <a href="{{ .RelPermalink }}">
+          <div class="album-preview-frame">
+            {{- with .Params.photos }}
+              {{- $first := index . 0 }}
+              <div class="photo-curated-placeholder">
+                <span class="photo-curated-tag">{{ $first.caption | default $first.alt }}</span>
+              </div>
+            {{- else }}
+              <div class="photo-curated-placeholder">
+                <span class="photo-curated-tag">View Album &rarr;</span>
+              </div>
+            {{- end }}
+          </div>
+        </a>
+      </div>
+
+      {{- with .Params.summary }}
+      <p class="album-caption-text text-secondary">{{ . }}</p>
+      {{- end }}
+    </article>
+    {{- end }}
+  </div>
+</div>
+{{- end -}}

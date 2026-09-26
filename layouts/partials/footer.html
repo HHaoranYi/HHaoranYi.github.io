@@ -1,0 +1,74 @@
+{{- if not (.Param "hideFooter") }}
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-copyright">
+            &copy; {{ now.Year }} <a href="{{ "" | absLangURL }}">{{ site.Title }}</a>
+        </div>
+        <div class="footer-social-links">
+            <a href="https://github.com/HHaoranYi" target="_blank" rel="noopener">GitHub</a>
+            <span class="sep">&middot;</span>
+            <a href="https://scholar.google.com/" target="_blank" rel="noopener">Scholar</a>
+            <span class="sep">&middot;</span>
+            <a href="https://www.linkedin.com/in/haoran-yi-189a4330a/" target="_blank" rel="noopener">LinkedIn</a>
+            <span class="sep">&middot;</span>
+            <a href="mailto:haoran.yi00@gmail.com">Email</a>
+        </div>
+    </div>
+</footer>
+{{- end }}
+
+{{- if (not site.Params.disableScrollToTop) }}
+<a href="#top" id="top-link" class="top-link hidden" aria-label="go to top" title="Go to Top (Alt + G)" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="17 11 12 6 7 11"></polyline>
+        <polyline points="17 18 12 13 7 18"></polyline>
+    </svg>
+</a>
+{{- end }}
+
+<script>
+    let menu = document.getElementById('menu');
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                const target = document.querySelector(`[id='${decodeURIComponent(id)}']`);
+                if (target) {
+                    target.scrollIntoView({ behavior: "smooth" });
+                }
+            } else {
+                const target = document.querySelector(`[id='${decodeURIComponent(id)}']`);
+                if (target) {
+                    target.scrollIntoView();
+                }
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (mybutton) {
+            if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+                mybutton.style.visibility = "visible";
+                mybutton.style.opacity = "1";
+            } else {
+                mybutton.style.visibility = "hidden";
+                mybutton.style.opacity = "0";
+            }
+        }
+    };
+</script>

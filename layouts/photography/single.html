@@ -1,155 +1,44 @@
 {{- define "main" -}}
-
-<div class="universal-wrapper pt-3">
-  <!-- Top Navigation Toolbar -->
-  <div class="photography-nav-toolbar mb-4 pb-2 border-bottom d-flex align-items-center justify-content-between">
-    <div class="small">
-      <a href="{{ "photography/" | relURL }}" class="font-weight-bold">
-        <i class="fas fa-camera mr-1"></i> Photography
-      </a>
-      <span class="mx-1 text-muted">/</span>
-      <span class="text-secondary">{{ .Title }}</span>
-    </div>
-    <div>
-      <a href="{{ site.Home.RelPermalink }}" class="text-muted small">
-        <i class="fas fa-arrow-left mr-1"></i> Academic Home
-      </a>
-    </div>
+<div class="photography-wide-container">
+  <div class="breadcrumbs-subtle">
+    <a href="/photography/">&larr; Photography</a>
   </div>
 
-  <!-- Album Header -->
-  <header class="album-header mb-4">
-    <h1 class="mb-2">{{ .Title }}</h1>
-    <div class="text-muted mb-3">
-      <span><i class="far fa-calendar-alt mr-1"></i> {{ .Date.Format "2006" }}</span>
-      {{ with .Params.location }}
-      <span class="mx-2">&middot;</span>
-      <span><i class="fas fa-map-marker-alt text-secondary mr-1"></i> {{ . }}</span>
-      {{ end }}
+  <header class="album-detail-header">
+    <h1 class="album-title">{{ .Title }}</h1>
+    <div class="album-location-time">
+      {{- with .Params.location }}<span>{{ . }}</span> &middot; {{ end }}
+      <span>{{ .Date.Format "2006" }}</span>
     </div>
-    {{ with .Content }}
-    <div class="article-style text-muted mb-4">{{ . }}</div>
-    {{ end }}
+    {{- with .Content }}
+    <div class="album-intro-prose text-secondary">{{ . }}</div>
+    {{- end }}
   </header>
 
-  <!-- Photo Grid -->
-  {{ $images := .Page.Resources.ByType "image" }}
-  {{ $photos_meta := .Params.photos }}
-
-  <div class="photo-gallery-grid row g-3" id="photo-gallery">
-    {{ if $photos_meta }}
-      {{ range $idx, $item := $photos_meta }}
-        {{ $res := $.Page.Resources.GetMatch $item.src }}
-        {{ if $res }}
-          {{ $thumb := $res.Fit "900x900 webp" }}
-          {{ $large := $res.Fit "2400x1600 webp" }}
-          <div class="col-12 col-md-6 col-lg-4 mb-3">
-            <div class="photo-item-card position-relative overflow-hidden rounded shadow-sm">
-              <a href="{{ $large.RelPermalink }}" class="gallery-photo-link" data-idx="{{ $idx }}" data-full="{{ $large.RelPermalink }}" data-caption="{{ $item.caption | default $item.alt }}" data-alt="{{ $item.alt }}">
-                <img src="{{ $thumb.RelPermalink }}" alt="{{ $item.alt }}" class="img-fluid w-100 rounded photo-thumbnail" loading="lazy" style="aspect-ratio: 4/3; object-fit: cover;">
-              </a>
-              {{ with $item.caption }}
-              <div class="photo-item-caption p-2 small text-muted text-center">{{ . }}</div>
-              {{ end }}
+  <div class="album-editorial-layout" id="photo-lightbox-gallery">
+    {{- with .Params.photos }}
+      {{- range $index, $photo := . }}
+        {{- $isWide := or (eq (mod $index 3) 0) (eq (mod $index 4) 0) }}
+        <figure class="album-photo-figure {{ if $isWide }}photo-wide{{ else }}photo-paired{{ end }}">
+          <div class="photo-frame">
+            <div class="photo-interactive-block" data-idx="{{ $index }}" data-caption="{{ $photo.caption | default $photo.alt }}" data-alt="{{ $photo.alt }}">
+              <div class="photo-visual-display">
+                <span class="photo-watermark">{{ $photo.alt }}</span>
+              </div>
             </div>
           </div>
-        {{ end }}
-      {{ end }}
-    {{ else if gt (len $images) 0 }}
-      {{ range $idx, $img := $images }}
-        {{ $thumb := $img.Fit "900x900 webp" }}
-        {{ $large := $img.Fit "2400x1600 webp" }}
-        <div class="col-12 col-md-6 col-lg-4 mb-3">
-          <div class="photo-item-card position-relative overflow-hidden rounded shadow-sm">
-            <a href="{{ $large.RelPermalink }}" class="gallery-photo-link" data-idx="{{ $idx }}" data-full="{{ $large.RelPermalink }}" data-caption="{{ $img.Title }}" data-alt="{{ $img.Title }}">
-              <img src="{{ $thumb.RelPermalink }}" alt="{{ $img.Title }}" class="img-fluid w-100 rounded photo-thumbnail" loading="lazy" style="aspect-ratio: 4/3; object-fit: cover;">
-            </a>
-          </div>
-        </div>
-      {{ end }}
-    {{ else }}
-      <div class="col-12 text-center text-muted py-5">
-        <p>No photos uploaded to this album yet.</p>
-      </div>
-    {{ end }}
+          {{- with $photo.caption }}
+          <figcaption class="photo-caption text-secondary">{{ . }}</figcaption>
+          {{- end }}
+        </figure>
+      {{- end }}
+    {{- end }}
   </div>
 
-  <div class="pt-5 pb-4 text-center">
-    <a href="{{ "photography/" | relURL }}" class="btn btn-outline-secondary btn-sm">
-      <i class="fas fa-th mr-1"></i> View All Albums
-    </a>
-  </div>
-</div>
-
-<!-- Accessible Pure JS Lightbox Modal -->
-<div id="gallery-lightbox" class="lightbox-modal" style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(4px);" role="dialog" aria-modal="true" aria-label="Photo view">
-  <div class="lightbox-container d-flex flex-column align-items-center justify-content-center h-100 position-relative p-2 p-md-4">
-    <button type="button" class="btn btn-link text-white position-absolute" style="top: 15px; right: 20px; font-size: 1.8rem; text-decoration: none;" id="lightbox-close" aria-label="Close photo view">&times;</button>
-    <button type="button" class="btn btn-link text-white position-absolute" style="left: 10px; top: 50%; transform: translateY(-50%); font-size: 2rem; text-decoration: none;" id="lightbox-prev" aria-label="Previous photo">&#10094;</button>
-    <button type="button" class="btn btn-link text-white position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); font-size: 2rem; text-decoration: none;" id="lightbox-next" aria-label="Next photo">&#10095;</button>
-
-    <div class="lightbox-content text-center" style="max-width: 90vw; max-height: 85vh;">
-      <img id="lightbox-img" src="" alt="" style="max-width: 100%; max-height: 80vh; object-fit: contain; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-      <div id="lightbox-caption" class="text-white-50 mt-2 small"></div>
+  <footer class="album-footer">
+    <div class="post-back-link text-center">
+      <a href="/photography/">&larr; Back to Photography</a>
     </div>
-  </div>
+  </footer>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  const links = Array.from(document.querySelectorAll('.gallery-photo-link'));
-  const lightbox = document.getElementById('gallery-lightbox');
-  const lbImg = document.getElementById('lightbox-img');
-  const lbCaption = document.getElementById('lightbox-caption');
-  const closeBtn = document.getElementById('lightbox-close');
-  const prevBtn = document.getElementById('lightbox-prev');
-  const nextBtn = document.getElementById('lightbox-next');
-  let currentIdx = 0;
-
-  if (!links.length || !lightbox) return;
-
-  function showImage(idx) {
-    if (idx < 0) idx = links.length - 1;
-    if (idx >= links.length) idx = 0;
-    currentIdx = idx;
-    const link = links[currentIdx];
-    lbImg.src = link.getAttribute('data-full');
-    lbImg.alt = link.getAttribute('data-alt') || '';
-    lbCaption.textContent = link.getAttribute('data-caption') || '';
-    lightbox.style.display = 'block';
-    document.body.style.overflow = 'hidden';
-  }
-
-  function hideLightbox() {
-    lightbox.style.display = 'none';
-    lbImg.src = '';
-    document.body.style.overflow = '';
-  }
-
-  links.forEach((link, i) => {
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      showImage(i);
-    });
-  });
-
-  closeBtn.addEventListener('click', hideLightbox);
-  prevBtn.addEventListener('click', () => showImage(currentIdx - 1));
-  nextBtn.addEventListener('click', () => showImage(currentIdx + 1));
-
-  lightbox.addEventListener('click', function (e) {
-    if (e.target === lightbox || e.target.classList.contains('lightbox-container')) {
-      hideLightbox();
-    }
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (lightbox.style.display === 'block') {
-      if (e.key === 'Escape') hideLightbox();
-      else if (e.key === 'ArrowLeft') showImage(currentIdx - 1);
-      else if (e.key === 'ArrowRight') showImage(currentIdx + 1);
-    }
-  });
-});
-</script>
 {{- end -}}

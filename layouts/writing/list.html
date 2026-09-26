@@ -1,0 +1,67 @@
+{{- define "main" -}}
+<div class="writing-container">
+  <header class="page-header">
+    <h1 class="page-title">{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="page-description text-secondary">{{ . }}</p>
+    {{- end }}
+  </header>
+
+  <div class="writing-categories-nav">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="Technical">Technical</button>
+    <button class="filter-btn" data-filter="Journal">Journal</button>
+  </div>
+
+  <div class="writing-list-timeline">
+    {{- $pages := where .RegularPages "Section" "writing" }}
+    {{- range $pages.GroupByDate "2006" }}
+    <div class="timeline-year-group">
+      <div class="timeline-year">{{ .Key }}</div>
+      <div class="timeline-posts">
+        {{- range .Pages }}
+        {{- $cat := "Uncategorized" }}
+        {{- with .Params.categories }}{{ $cat = index . 0 }}{{ end }}
+        <article class="timeline-post-row" data-category="{{ $cat }}">
+          <div class="post-date">{{ .Date.Format "Jan 02" }}</div>
+          <div class="post-content-meta">
+            <h2 class="post-heading">
+              <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            </h2>
+            <div class="post-meta-sub">
+              <span class="post-cat-badge">{{ $cat }}</span>
+              {{- with .Params.summary }}
+              <span class="post-summary-snippet">&mdash; {{ . }}</span>
+              {{- end }}
+            </div>
+          </div>
+        </article>
+        {{- end }}
+      </div>
+    </div>
+    {{- end }}
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const buttons = document.querySelectorAll('.filter-btn');
+  const rows = document.querySelectorAll('.timeline-post-row');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.getAttribute('data-filter');
+      rows.forEach(row => {
+        if (filter === 'all' || row.getAttribute('data-category') === filter) {
+          row.style.display = 'flex';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    });
+  });
+});
+</script>
+{{- end -}}

@@ -1,82 +1,90 @@
-# Agent Editing & Repository Guidelines
+# AGENTS.md — PaperMod Operating & Development Guidelines
 
-This document defines the operating rules, directory structure, truthfulness standards, and build/deploy procedures for automated AI agents and contributors maintaining this repository.
-
----
-
-## 1. Site Goals & Target Audience
-
-- **Primary Persona**: Academic homepage for Haoran Yi, PhD Researcher in Integrated Circuits and Systems at Linköping University.
-- **Target Audience**: Researchers, collaborators, semiconductor/IC industry recruiters, and engineering peers.
-- **Core Principle (Academic-First)**:
-  - Homepage is strictly focused on academic identity, research directions, projects, and contact details.
-  - Writing (`/blog/`) and Photography (`/photography/`) are secondary destinations placed in the footer.
-  - No writing preview feeds or photo carousels on the homepage.
+This document guides AI coding assistants, automated workflows, and contributors in maintaining, editing, and publishing content on this website.
 
 ---
 
-## 2. Information Architecture & Navigation
+## 1. Purpose
 
-- **Header Navigation (Strictly 3 Links)**:
-  - `Home` (`/`)
-  - `Research` (`/research/`)
-  - `CV` (`/cv/`)
-- **Footer Navigation**:
-  - `Writing` (`/blog/`)
-  - `Photography` (`/photography/`)
-- **URL Conventions**:
-  - `content/blog/<slug>/index.md` -> `/blog/<slug>/`
-  - `content/project/<slug>/index.md` -> `/project/<slug>/`
-  - `content/publication/<slug>/index.md` -> `/publication/<slug>/`
-  - `content/photography/<slug>/index.md` -> `/photography/<slug>/`
-  - Retain `/cv/` and direct download at `/uploads/resume.pdf`.
+A quiet academic personal website that gradually becomes an editorial technical blog and photography journal as the visitor explores it.
+
+- **Primary Persona**: Haoran Yi, PhD Researcher in Integrated Circuits and Systems at Linköping University, Sweden.
+- **Visual Direction Inspiration**: [https://insel-sagt.com/](https://insel-sagt.com/) — Simplicity, editorial rhythm, whitespace, typography-first, natural integration of text and photography, low visual noise.
 
 ---
 
-## 3. Truthfulness & Content Integrity Rules
+## 2. Content Hierarchy & Navigation
 
-- **Zero Hallucination Policy**:
-  - Never invent or assume paper DOIs, co-authors, publication dates, tapeout silicon measurements, or foundry process nodes.
-  - If project data or paper details are incomplete, create them as draft (`draft: true`).
-  - Candidate topics (e.g. WTA selector, CIM accelerators) must not be published as completed tapeouts unless verified.
-  - Never publish third-party demo images as personal photography works.
+Top Navigation (Strictly 4 links + Logo + Theme Toggle):
+```text
+Haoran Yi                         Research   Writing   Photography   CV   ◐
+```
+
+Content Architecture:
+```text
+content/
+├── research/index.md           -> /research/
+├── writing/                    -> /writing/
+│   ├── _index.md
+│   ├── <slug>/index.md         (categories: ["Technical"] or ["Journal"])
+├── projects/                   -> /projects/
+│   ├── _index.md
+│   ├── <slug>/index.md         (technical case study format)
+├── photography/                -> /photography/
+│   ├── _index.md
+│   └── <album-slug>/index.md   (editorial image journal)
+└── cv/index.md                 -> /cv/
+```
 
 ---
 
-## 4. Local Build & Verification Commands
+## 3. Design Principles (Strict Constraints)
 
-- Ensure portable Hugo Extended and Go are available in PATH:
-  ```powershell
-  $env:PATH = "C:\Users\HRan\.local\go\bin;C:\Users\HRan\.local\bin;$env:PATH"
-  ```
+- **Editorial Rather Than Dashboard**: Avoid SaaS landing layouts, dashboard cards, floating containers, and busy UI widgets.
+- **Typography-First**:
+  - Sans-serif stack for navigation, UI, and headings.
+  - Serif typography for long-form article reading (font-size 17–18px, line-height ~1.7).
+  - Maximum 2 font families across the site.
+- **Strictly Prohibited**:
+  - NO gradients.
+  - NO glassmorphism.
+  - NO floating pill buttons or drop shadows.
+  - NO large rounded cards (border-radius strictly `0–4px`).
+  - NO skill progress bars or animated stats counters.
+  - NO oversized hero banners.
+  - NO decorative SVG illustrations.
+- **Palette**:
+  - Light mode: Warm off-white (`#faf9f7`), near black text (`#222222`), neutral gray secondary (`#666666`), subtle borders (`#e6e3df`), restrained dark blue accent (`#1b4965`).
+  - Dark mode: Near black (`#161616`), soft off-white text (`#e0e0e0`), neutral gray (`#8c8c8c`), subtle borders (`#2a2a2a`).
+- **Width System**:
+  - General container: `1080px`
+  - Long-form article text: `720px`
+  - Research / Project case studies: `820px`
+  - Photography: `1180px`
+
+---
+
+## 4. Publishing Rules & Integrity
+
+Never:
+1. Invent paper metadata, DOIs, venues, or co-authors.
+2. Fabricate research silicon measurements, tapeout results, or foundry process nodes.
+3. Publish confidential, pre-filing, or unverified project details without authorization.
+4. Expose private contact details, GPS EXIF coordinates, or camera serial numbers.
+5. Alter factual academic or educational history without verified documentation.
+
+---
+
+## 5. Development & Deployment
+
+- **Upstream Theme**: Hugo PaperMod at `themes/PaperMod` (keep unmodified; customize via `assets/css/extended/` and `layouts/`).
 - **Local Dev Server**:
   ```powershell
   hugo server -D
   ```
-- **Production Build (Drafts Excluded)**:
+- **Production Build**:
   ```powershell
   hugo --minify
   ```
-- **Check Output**:
-  - Verify `public/` generation without template errors or broken links.
-
----
-
-## 5. Adding New Content
-
-- **New Blog Post**:
-  Create `content/blog/<slug>/index.md` using `archetypes/blog.md`.
-  Specify `kind: "technical"` or `kind: "personal"`.
-- **New Project**:
-  Create `content/project/<slug>/index.md` using `archetypes/project.md`.
-- **New Photography Album**:
-  Create `content/photography/<slug>/index.md` using `archetypes/photography.md`.
-  Use `scripts/photography/optimize_photos.py` to strip GPS EXIF and resize images before committing.
-
----
-
-## 6. Branch & Release Workflow
-
-- `main`: Production release branch. Automated GitHub Actions will build and deploy on push.
-- `redesign-v2`: Restructuring and staging development branch.
-- `legacy-v1`: Git tag preserving the pre-restructure baseline.
+- **GitHub Actions Deployment**:
+  Pushes to `main` branch automatically build and publish to GitHub Pages using Hugo Extended v0.146.0 with `submodules: recursive`.

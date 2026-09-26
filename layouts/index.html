@@ -1,0 +1,162 @@
+{{- define "main" -}}
+<div class="home-editorial">
+
+  <!-- 1. Hero Section -->
+  <section class="home-hero">
+    <div class="hero-content">
+      <h1 class="hero-name">Haoran Yi</h1>
+      <p class="hero-title">PhD Researcher in Integrated Circuits &amp; Systems</p>
+      <p class="hero-affiliation">Linköping University, Sweden</p>
+      
+      <p class="hero-bio">
+        I work on efficient digital and mixed-signal architectures for neuromorphic computing,
+        AI hardware, and sparse computing.
+      </p>
+
+      <div class="hero-links">
+        <a href="https://github.com/HHaoranYi" target="_blank" rel="noopener">GitHub</a>
+        <span class="sep">&middot;</span>
+        <a href="https://scholar.google.com/" target="_blank" rel="noopener">Scholar</a>
+        <span class="sep">&middot;</span>
+        <a href="https://www.linkedin.com/in/haoran-yi-189a4330a/" target="_blank" rel="noopener">LinkedIn</a>
+        <span class="sep">&middot;</span>
+        <a href="mailto:haoran.yi00@gmail.com">Email</a>
+      </div>
+    </div>
+
+    <div class="hero-portrait-wrapper">
+      <img src="/images/avatar.jpg" alt="Haoran Yi" class="hero-portrait" width="136" height="136" loading="eager" />
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- 2. Research Themes -->
+  <section class="home-section home-research">
+    <div class="section-header">
+      <h2 class="section-title">Research</h2>
+      <a href="/research/" class="section-more">Overview &rarr;</a>
+    </div>
+
+    <div class="editorial-themes-grid">
+      <div class="theme-item">
+        <span class="theme-num">01</span>
+        <h3 class="theme-title">Neuromorphic Computing</h3>
+        <p class="theme-desc">Brain-inspired and event-driven computing architectures interfacing with bio-inspired dynamic vision sensors.</p>
+      </div>
+
+      <div class="theme-item">
+        <span class="theme-num">02</span>
+        <h3 class="theme-title">Digital &amp; Mixed-Signal IC</h3>
+        <p class="theme-desc">Energy-efficient circuit design, adaptive winner-take-all circuits, and analog-digital co-design.</p>
+      </div>
+
+      <div class="theme-item">
+        <span class="theme-num">03</span>
+        <h3 class="theme-title">Sparse AI Hardware</h3>
+        <p class="theme-desc">Compute-in-memory and specialized acceleration architectures exploiting structured and dynamic sparsity in modern models.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- 3. Selected Work -->
+  <section class="home-section home-projects">
+    <div class="section-header">
+      <h2 class="section-title">Selected Work</h2>
+      <a href="/projects/" class="section-more">All Projects &rarr;</a>
+    </div>
+
+    <div class="editorial-list">
+      <a href="/projects/arm-ai-acceleration/" class="editorial-row">
+        <div class="row-main">
+          <span class="row-title">AI Model Deployment &amp; Performance Acceleration on ARM</span>
+          <span class="row-subtitle">Embedded AI · Multi-Core Optimization</span>
+        </div>
+        <span class="row-year">2024</span>
+      </a>
+
+      <div class="editorial-row">
+        <div class="row-main">
+          <span class="row-title">Adaptive Winner-Take-All Selector</span>
+          <span class="row-subtitle">65-nm CMOS · Mixed-Signal IC (In verification)</span>
+        </div>
+        <span class="row-year">2026</span>
+      </div>
+
+      <div class="editorial-row">
+        <div class="row-main">
+          <span class="row-title">Hybrid Attention Compute-in-Memory Accelerator</span>
+          <span class="row-subtitle">65-nm CMOS · AI Hardware (In design)</span>
+        </div>
+        <span class="row-year">2026</span>
+      </div>
+
+      <div class="editorial-row">
+        <div class="row-main">
+          <span class="row-title">Neuromorphic Vision Processor</span>
+          <span class="row-subtitle">Digital IC · Event-based Vision (In preparation)</span>
+        </div>
+        <span class="row-year">2025</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- 4. Publications -->
+  <section class="home-section home-publications">
+    <div class="section-header">
+      <h2 class="section-title">Publications</h2>
+    </div>
+    <p class="text-secondary compact-note">
+      Manuscripts on neuromorphic processors and mixed-signal compute-in-memory are currently in preparation and under peer review.
+    </p>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- 5. Latest Writing -->
+  <section class="home-section home-writing">
+    <div class="section-header">
+      <h2 class="section-title">Writing</h2>
+      <a href="/writing/" class="section-more">View all writing &rarr;</a>
+    </div>
+
+    <div class="editorial-list">
+      {{- $writing_pages := where site.RegularPages "Section" "writing" }}
+      {{- range first 3 $writing_pages }}
+      <a href="{{ .RelPermalink }}" class="editorial-row">
+        <div class="row-main">
+          <span class="row-title">{{ .Title }}</span>
+          <span class="row-subtitle">{{ with .Params.summary }}{{ . }}{{ else }}{{ index .Params.categories 0 }}{{ end }}</span>
+        </div>
+        <span class="row-year">{{ .Date.Format "Jan 2006" }}</span>
+      </a>
+      {{- end }}
+    </div>
+  </section>
+
+  <hr class="section-divider" />
+
+  <!-- 6. Photography Feature -->
+  <section class="home-section home-photography">
+    <div class="section-header">
+      <h2 class="section-title">Photography</h2>
+      <a href="/photography/" class="section-more">View photography &rarr;</a>
+    </div>
+
+    <div class="home-photo-feature">
+      <div class="photo-feature-frame">
+        <a href="/photography/">
+          <div class="photo-placeholder-editorial">
+            <span class="photo-ambient-tag">Nordic Light &amp; Geometry &mdash; Sweden, 2026</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div>
+{{- end -}}

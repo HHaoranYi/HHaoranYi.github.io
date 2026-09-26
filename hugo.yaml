@@ -1,0 +1,76 @@
+baseURL: "https://hhaoranyi.github.io/"
+title: "Haoran Yi"
+theme: "PaperMod"
+
+defaultContentLanguage: "en"
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+enableEmoji: true
+pygmentsUseClasses: true
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+taxonomies:
+  category: categories
+  tag: tags
+
+permalinks:
+  writing: "/writing/:slug/"
+  projects: "/projects/:slug/"
+  photography: "/photography/:slug/"
+
+params:
+  env: production
+  title: "Haoran Yi"
+  description: "Haoran Yi - PhD Researcher in Integrated Circuits and Systems at Linköping University."
+  keywords: ["Integrated Circuits", "Neuromorphic Computing", "AI Hardware", "Computer Architecture", "Haoran Yi"]
+  author: "Haoran Yi"
+  DateFormat: "Jan 2, 2006"
+  defaultTheme: auto
+  disableThemeToggle: false
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: false
+  ShowBreadCrumbs: false
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: false
+  ShowToc: false
+  TocOpen: false
+  disableSpecial1stPost: true
+
+  profileMode:
+    enabled: false
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/HHaoranYi"
+    - name: googlescholar
+      url: "https://scholar.google.com/"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/haoran-yi-189a4330a/"
+    - name: email
+      url: "mailto:haoran.yi00@gmail.com"
+
+menu:
+  main:
+    - identifier: research
+      name: Research
+      url: /research/
+      weight: 10
+    - identifier: writing
+      name: Writing
+      url: /writing/
+      weight: 20
+    - identifier: photography
+      name: Photography
+      url: /photography/
+      weight: 30
+    - identifier: cv
+      name: CV
+      url: /cv/
+      weight: 40
